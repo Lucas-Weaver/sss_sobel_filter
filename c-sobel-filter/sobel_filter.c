@@ -65,7 +65,7 @@ void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width)
 	}
 
 }
-
+/*
 int main(){
     
     int width, height, bpp;
@@ -82,3 +82,4 @@ int main(){
     stbi_image_free(gray_image);
     return 0;
 }
+* */
