@@ -1,0 +1,18 @@
+Accuracy metrics:
+
+MSE - mean square error
+
+MM-SSIM 
+
+SSIM - structural similarity index 
+
+FOM - Figure of merit 
+
+
+Manhattan distance vs Euclidean
+
+different data types: floats vs doubles vs longs ...
+
+power vs accuracy vs runtime 
+
+

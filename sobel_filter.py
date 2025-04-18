@@ -18,6 +18,10 @@ def filter(arr,scale,offset):
     magnitude *= scale
     magnitude += offset
     return magnitude.astype(np.uint8)
+
+
+
+    
 def high_productivity(im):
     global total_time
     global frames
