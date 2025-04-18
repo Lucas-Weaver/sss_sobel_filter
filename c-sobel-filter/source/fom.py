@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-
+import sys
 #from canny import canny
 from scipy.ndimage import distance_transform_edt
 
@@ -37,9 +37,9 @@ def fom(img, img_gold_std, alpha = DEFAULT_ALPHA):
 
     return fom
 
-test = Image.open("test.jpg")
+test = Image.open(sys.argv[0])
 test_arr = np.array(test)
-ground = Image.open("ground_truth.jpg")
+ground = Image.open(sys.argv[1])
 
 ground_truth_arr = np.array(ground)
 
