@@ -8,7 +8,7 @@
 
 
 
-void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width)
+void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width,int threshold,int metric)
 {	
 	/* Variable Declaration */
 	register int x_sum, y_sum;
@@ -55,26 +55,37 @@ void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width)
 			);
 
 			// Manhatan Distance is used instead of Eucledian to increase performance
-            if (abs(x_sum) + abs(y_sum) > 255){
+			//if metric is 1, use eucliden. otherwise use manahatan
+			double distance;
+
+			if (metric){
+				distance =  sqrt(pow(x_sum,2) + pow(y_sum,2));
+				//printf("%d",distance);
+			}
+			else{
+				distance = abs(x_sum)+abs(y_sum);
+			}
+			//implement threshold
+            if (distance > threshold){
 			    dest_arr[x * width + y] = 255;
             } else {
-			    dest_arr[x * width + y] = abs(x_sum) + abs(y_sum);
+			    dest_arr[x * width + y] = 0;
             }
 
 		}
 	}
 
 }
-/*
+
 int main(){
     
     int width, height, bpp;
 
-    uint8_t* gray_image = stbi_load("test.png", &width, &height, &bpp, 1);
+    uint8_t* gray_image = stbi_load("test.jpg", &width, &height, &bpp, 1);
 
     uint8_t sobel[width*height];
 
-    sobel_filter(gray_image,sobel,height,width);
+    sobel_filter(gray_image,sobel,height,width,350,1);
 
     stbi_write_png("sobel_filter.png",width,height,1,sobel,width);
 
@@ -82,4 +93,4 @@ int main(){
     stbi_image_free(gray_image);
     return 0;
 }
-* */
+
