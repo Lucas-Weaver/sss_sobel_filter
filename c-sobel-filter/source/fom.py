@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-import sys
+import sys, os
 #from canny import canny
 from scipy.ndimage import distance_transform_edt
 
@@ -36,11 +36,20 @@ def fom(img, img_gold_std, alpha = DEFAULT_ALPHA):
         np.count_nonzero(img_gold_std))    
 
     return fom
-
-test = Image.open(sys.argv[0])
+def make_grey(name_of_dir):
+    for filename in os.listdir(name_of_dir):
+        img = Image.open(os.path.join(name_of_dir,filename)).convert('L')
+        img.save(os.path.join(name_of_dir,filename))
+        
+'''
+test = Image.open(sys.argv[1])
 test_arr = np.array(test)
-ground = Image.open(sys.argv[1])
+ground = Image.open(sys.argv[2])
 
 ground_truth_arr = np.array(ground)
 
 print(fom(test_arr,ground_truth_arr))
+'''
+
+make_grey("/home/atharva/sss_sobel_filter/c-sobel-filter/test/BSDS300/images/train")
+

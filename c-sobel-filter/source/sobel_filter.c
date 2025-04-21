@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <omp.h>
 #include <math.h>
+#include <time.h>
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image.h"
@@ -77,20 +78,26 @@ void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width,int
 
 }
 
-int main(){
+int main(int argc, char * argv[]){
     
     int width, height, bpp;
-
-    uint8_t* gray_image = stbi_load("test.jpg", &width, &height, &bpp, 1);
+    printf("%s\n",argv[2]);
+    uint8_t* gray_image = stbi_load(argv[1], &width, &height, &bpp, 1);
 
     uint8_t sobel[width*height];
-
+    clock_t start = clock();
     sobel_filter(gray_image,sobel,height,width,350,1);
-
-    stbi_write_png("sobel_filter.png",width,height,1,sobel,width);
-
+    clock_t end = clock();
+    double cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    
+    stbi_write_png(argv[2],width,height,1,sobel,width);
     
     stbi_image_free(gray_image);
+    /*
+    FILE * out = fopen("times.txt","r");
+    fprintf(out, "%f\n", cpu_time_used);
+    fclose(out);
+    * */
     return 0;
 }
 
