@@ -40,7 +40,33 @@ def make_grey(name_of_dir):
     for filename in os.listdir(name_of_dir):
         img = Image.open(os.path.join(name_of_dir,filename)).convert('L')
         img.save(os.path.join(name_of_dir,filename))
-        
+
+scores = []
+directory = os.fsencode("/home/atharva/sss_sobel_filter/c-sobel-filter/test/output")
+for file in os.listdir(directory):
+    filename = os.fsdecode(file)
+    output_path = os.path.join(directory, file)
+    filename = filename.replace("png","jpg")
+    ground_path = "/home/atharva/sss_sobel_filter/c-sobel-filter/test/ground_truth/"+filename
+    output_image = Image.open(output_path)
+    ground_truth_image = Image.open(ground_path)
+    
+    output_arr = np.array(output_image)
+    ground_truth_arr = np.array(ground_truth_image)
+    
+    scores.append(fom(output_arr,ground_truth_arr))
+    
+file = open("/home/atharva/sss_sobel_filter/c-sobel-filter/data/times.txt")
+time_sum = 0
+line_count = 0
+for line in file:
+    line = line.replace("\n","")
+    time_sum+=float(line)
+    line_count+=1
+print(f'average time: {time_sum/line_count}')
+print(f'average FOM: {sum(scores)/line_count}')
+    
+    
 '''
 test = Image.open(sys.argv[1])
 test_arr = np.array(test)
@@ -51,5 +77,5 @@ ground_truth_arr = np.array(ground)
 print(fom(test_arr,ground_truth_arr))
 '''
 
-make_grey("/home/atharva/sss_sobel_filter/c-sobel-filter/test/BSDS300/images/train")
+
 

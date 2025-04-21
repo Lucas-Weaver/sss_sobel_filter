@@ -56,22 +56,20 @@ void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width,int
 			);
 
 			// Manhatan Distance is used instead of Eucledian to increase performance
-			//if metric is 1, use eucliden. otherwise use manahatan
-			double distance;
+			//if metric is 1, use eucliden. otherwise use manhatan
+			int distance; //type defines the precision
 
 			if (metric){
-				distance =  sqrt(pow(x_sum,2) + pow(y_sum,2));
-				//printf("%d",distance);
+				distance =  sqrt(pow((double)x_sum,(double)2) + pow((double)y_sum,(double)2));
 			}
 			else{
 				distance = abs(x_sum)+abs(y_sum);
 			}
-			//implement threshold
-            if (distance > threshold){
-			    dest_arr[x * width + y] = 255;
-            } else {
-			    dest_arr[x * width + y] = 0;
-            }
+			if (distance > threshold){
+					dest_arr[x * width + y] = 255;
+			} else {
+					dest_arr[x * width + y] = 0;
+			}
 
 		}
 	}
@@ -81,7 +79,6 @@ void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width,int
 int main(int argc, char * argv[]){
     
     int width, height, bpp;
-    printf("%s\n",argv[2]);
     uint8_t* gray_image = stbi_load(argv[1], &width, &height, &bpp, 1);
 
     uint8_t sobel[width*height];
@@ -93,11 +90,10 @@ int main(int argc, char * argv[]){
     stbi_write_png(argv[2],width,height,1,sobel,width);
     
     stbi_image_free(gray_image);
-    /*
-    FILE * out = fopen("times.txt","r");
+    
+    FILE * out = fopen("data/times.txt","a");
     fprintf(out, "%f\n", cpu_time_used);
     fclose(out);
-    * */
     return 0;
 }
 
