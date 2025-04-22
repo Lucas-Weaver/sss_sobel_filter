@@ -65,6 +65,12 @@ for line in file:
     line_count+=1
 print(f'average time: {time_sum/line_count}')
 print(f'average FOM: {sum(scores)/line_count}')
+
+out = open("/home/atharva/sss_sobel_filter/c-sobel-filter/data/euclidean_double_fom.txt","x")
+
+[out.write(f'{i}\n') for i in scores]
+
+out.close()
     
     
 '''

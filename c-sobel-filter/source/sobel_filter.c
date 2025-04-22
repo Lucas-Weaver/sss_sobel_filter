@@ -57,7 +57,7 @@ void sobel_filter(uint8_t * src_arr,uint8_t * dest_arr,int height, int width,int
 
 			// Manhatan Distance is used instead of Eucledian to increase performance
 			//if metric is 1, use eucliden. otherwise use manhatan
-			int distance; //type defines the precision
+			double distance; //type defines the precision
 
 			if (metric){
 				distance =  sqrt(pow((double)x_sum,(double)2) + pow((double)y_sum,(double)2));
